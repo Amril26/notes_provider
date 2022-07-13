@@ -18,32 +18,34 @@ class HomeNote extends StatelessWidget {
     );
   }
 
-  _cardNotes(int index) {
+  _cardNotes({required String title, required String description}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        color: secondaryColor.withOpacity(0.5),
+        color: secondaryColor.withOpacity(0.2),
+        border: Border.all(color: secondaryColor.withOpacity(0.5), width: 1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Title ini adalah Title => $index',
+            title,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               color: textColorPrimaryBlack,
             ),
           ),
-          const SizedBox(
-            height: 10,
+          Divider(
+            color: secondaryColor.withOpacity(0.2),
           ),
           Text(
-            'description ini adalah description',
+            description,
+            maxLines: 5,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 13,
               fontWeight: FontWeight.w500,
               color: textColorSecondary,
             ),
@@ -67,7 +69,10 @@ class HomeNote extends StatelessWidget {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () => note.removeNote(index),
-          child: _cardNotes(index + 1),
+          child: _cardNotes(
+            title: note.setNoteList[index].title,
+            description: note.setNoteList[index].description,
+          ),
         );
       },
     );
@@ -77,8 +82,10 @@ class HomeNote extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: primaryColor,
       onPressed: () => note.addNoteProvider(
-          title: 'title ini titile',
-          description: ' description ini description'),
+        title: 'sakila',
+        description:
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
+      ),
       mini: true,
       child: Icon(
         Icons.add,
